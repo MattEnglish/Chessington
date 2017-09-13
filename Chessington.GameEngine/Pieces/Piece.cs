@@ -14,7 +14,7 @@ namespace Chessington.GameEngine.Pieces
 
         public Player Player { get; private set; }
 
-        public abstract IEnumerable<Square> GetAvailableMoves(Board board);
+        public abstract IEnumerable<Square> GetAvailableMoves(Board board); //yeild returning
 
         public virtual void MoveTo(Board board, Square newSquare)
         {
