@@ -103,9 +103,29 @@ namespace Chessington.GameEngine
             return true;
         }
 
+        public bool isPieceDirectlyBetweenHorizontalOrVerticalExclusive(Square startingSquare, Square targetSquare)
+        {
+            if (startingSquare.Row == targetSquare.Row)
+            {
+                if (IsPieceInBetweenHorizontalExclusive(startingSquare.Row, startingSquare.Col, targetSquare.Col))
+                {
+                    return true;
+                }
+            }
+            if (startingSquare.Col == targetSquare.Col)
+            {
+                if (IsPieceInBetweenVerticalExclusive(startingSquare.Col, startingSquare.Row, targetSquare.Row))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         public bool IsPieceInBetweenHorizontalExclusive(int row, int startingCol, int targetCol)
         {
-            for (int col = startingCol+1; col < targetCol; col++)
+            for (int col = Math.Min(startingCol, targetCol) + 1; col < Math.Max(startingCol, targetCol); col++)
             {
                 if (IsPieceOnSquare(new Square(row, col)))
                 {
@@ -117,9 +137,7 @@ namespace Chessington.GameEngine
 
         public bool IsPieceInBetweenVerticalExclusive(int col, int startingRow, int targetRow)
         {
-            
-
-
+           
             
                 for (int row = Math.Min(startingRow,targetRow)+1;  row < Math.Max(startingRow,targetRow); row++)
                 {

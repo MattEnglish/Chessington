@@ -15,6 +15,8 @@ namespace Chessington.GameEngine.Pieces
             squares.AddRange(base.GetSquaresInRow(currentSquare));
             squares.AddRange(base.GetSquaresInCol(currentSquare));
             squares.RemoveAll(s => s == currentSquare);
+            squares.RemoveAll(s => board.isPieceDirectlyBetweenHorizontalOrVerticalExclusive(currentSquare, s));
+            
             return squares;
         }
     }
