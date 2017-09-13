@@ -19,6 +19,7 @@ namespace Chessington.GameEngine.Pieces
                 }               
             }
             squares.Remove(currentSquare);
+            squares.RemoveAll(s => !Board.IsSquareInBounds(s));
             return squares;
         }
     }
