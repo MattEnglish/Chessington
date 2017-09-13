@@ -28,7 +28,7 @@ namespace Chessington.GameEngine.Pieces
             board.MovePiece(currentSquare, newSquare);
         }
 
-        protected IEnumerable<Square> HorizontalSquares(Square currentSquare)
+        protected IEnumerable<Square> GetSquaresInRow(Square currentSquare)
         {
             for (int row = 0; row < 8; row++)
             {
@@ -39,7 +39,7 @@ namespace Chessington.GameEngine.Pieces
             }
         }
 
-        protected IEnumerable<Square> VerticalSquares(Square currentSquare)
+        protected IEnumerable<Square> GetSquaresInCol(Square currentSquare)
         {
             for (int col = 0; col < 8; col++)
             {
@@ -47,6 +47,31 @@ namespace Chessington.GameEngine.Pieces
                 {
                     yield return (new Square(currentSquare.Row, col));
                 }
+            }
+        }
+
+        protected IEnumerable<Square> GetSquaresInDiagonal(Square currentSquare)
+        {
+            var validSquares = new List<Square> ();
+            validSquares.AddRange(GetInvalidSquaresWithin16BackDiagonal(currentSquare));
+            validSquares.AddRange(GetInvalidSquaresWithin16ForwardDiagonal(currentSquare));
+            validSquares.RemoveAll(s => !Board.IsSquareInBounds(s));
+            return validSquares;
+        }
+
+        private IEnumerable<Square> GetInvalidSquaresWithin16ForwardDiagonal(Square currentSquare)
+        {
+            for (var i = -7; i < 8; i++)
+            {
+                yield return (new Square(currentSquare.Row + i, currentSquare.Col + i));
+            }
+        }
+
+        private IEnumerable<Square> GetInvalidSquaresWithin16BackDiagonal(Square currentSquare)
+        {
+            for (var i = -7; i < 8; i++)
+            {
+                yield return (new Square(currentSquare.Row + i, currentSquare.Col - i));
             }
         }
     }

@@ -21,7 +21,7 @@ namespace Chessington.GameEngine
             CapturedPieces = new List<Piece>();
         }
 
-        public bool IsSquareInBounds(Square square)
+        public static bool IsSquareInBounds(Square square)
         {
             if (square.Row < GameSettings.BoardSize && square.Col < GameSettings.BoardSize && square.Row >= 0 && square.Col >= 0)
             {
