@@ -122,7 +122,20 @@ namespace Chessington.GameEngine
             return false;
         }
 
+        public bool isFriendlyPieceOnSquare(Player player,Square square)
+        {
+            Piece piece = GetPiece(square);
+            if (piece == null)
+            {
+                return false;
+            }
+            if (player == piece.Player)
+            {
+                return true;
+            }
+            return false;
 
+        }
         public bool IsPieceInBetweenHorizontalExclusive(int row, int startingCol, int targetCol)
         {
             for (int col = Math.Min(startingCol, targetCol) + 1; col < Math.Max(startingCol, targetCol); col++)

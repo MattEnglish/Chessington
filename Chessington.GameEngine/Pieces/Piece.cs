@@ -18,7 +18,7 @@ namespace Chessington.GameEngine.Pieces
         {
             var currentSquare = board.FindPiece(this);
             var availableSquares = (List<Square>)GetAvailableMoves(board, currentSquare);
-            availableSquares.RemoveAll(s => board.IsPieceOnSquare(s));
+            availableSquares.RemoveAll(s => board.isFriendlyPieceOnSquare(Player,s));
             return availableSquares;
         }
 
