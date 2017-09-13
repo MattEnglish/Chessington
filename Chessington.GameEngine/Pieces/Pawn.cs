@@ -12,46 +12,70 @@ namespace Chessington.GameEngine.Pieces
         public Pawn(Player player)
             : base(player)
         {
-            owner = player;           
+            owner = player;
         }
 
         public override void MoveTo(Board board, Square newSquare)
         {
             hasMoved = true;
-            base.MoveTo(board,newSquare);
+            base.MoveTo(board, newSquare);
         }
-        
+
 
         public override IEnumerable<Square> GetAvailableMoves(Board board, Square currentSquare)
         {
 
             var squares = new List<Square>();
-                        
-            if (this.owner == Player.White)
+            int forward = (base.Player == Player.White) ? -1 : 1;
+
+
+            var forwardSquare = new Square(currentSquare.Row + forward, currentSquare.Col);
+            if (Board.IsSquareInBounds(forwardSquare) && !board.IsPieceOnSquare(forwardSquare))
             {
+
                 if (!hasMoved)
                 {
-                    squares.Add(new Square(currentSquare.Row - 2, currentSquare.Col));
+                    var doubleForwardSquare = new Square(currentSquare.Row + 2 * forward, currentSquare.Col);
+
+                    if (Board.IsSquareInBounds(doubleForwardSquare) && !board.IsPieceOnSquare(doubleForwardSquare))
+                    {
+                        squares.Add(doubleForwardSquare);
+                    }
                 }
 
-                squares.Add(new Square(currentSquare.Row - 1, currentSquare.Col));
+
+                squares.Add(forwardSquare);
             }
-            else
+
+            var diagonalSquare = new Square(currentSquare.Row + forward, currentSquare.Col - 1);
+            if (Board.IsSquareInBounds(diagonalSquare))
             {
-                if (!hasMoved)
+                if (board.IsPieceOnSquare(diagonalSquare))
                 {
-                    squares.Add(new Square(currentSquare.Row + 2, currentSquare.Col));
+                    squares.Add(diagonalSquare);
                 }
-
-                squares.Add(new Square(currentSquare.Row + 1, currentSquare.Col));
             }
+            diagonalSquare = new Square(currentSquare.Row + forward, currentSquare.Col + 1);
+            if (Board.IsSquareInBounds(diagonalSquare))
+            {
+                if (board.IsPieceOnSquare(diagonalSquare))
+                {
+                    squares.Add(diagonalSquare);
+                }
+            }
+
+
+
+
 
             squares.RemoveAll(s => !Board.IsSquareInBounds(s));
             squares.RemoveAll(s => board.IsPieceInBetweenVerticalExclusive(s.Col, s.Row, currentSquare.Row));
-            squares.RemoveAll(s => board.IsPieceOnSquare(s));
-            
+
+
 
             return squares;
         }
+
+
     }
 }

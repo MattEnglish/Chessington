@@ -122,6 +122,18 @@ namespace Chessington.GameEngine
             return false;
         }
 
+        public bool isEnemyPieceOnSquare(Player player, Square square)
+        {
+            if (IsPieceOnSquare(square))
+            {
+                if (!isFriendlyPieceOnSquare(player, square))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool isFriendlyPieceOnSquare(Player player,Square square)
         {
             Piece piece = GetPiece(square);
