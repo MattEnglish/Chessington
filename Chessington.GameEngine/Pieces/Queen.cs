@@ -8,9 +8,13 @@ namespace Chessington.GameEngine.Pieces
         public Queen(Player player)
             : base(player) { }
 
-        public override IEnumerable<Square> GetAvailableMoves(Board board)
+        public override IEnumerable<Square> GetAvailableMoves(Board board, Square currentSquare)
         {
-            return Enumerable.Empty<Square>();
+            var squares = new List<Square>();
+            squares.AddRange(base.HorizontalSquares(currentSquare));
+            squares.AddRange(base.VerticalSquares(currentSquare));
+            squares.RemoveAll(s => s == currentSquare);
+            return squares;
         }
     }
 }

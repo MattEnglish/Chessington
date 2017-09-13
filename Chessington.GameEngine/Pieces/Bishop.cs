@@ -8,9 +8,9 @@ namespace Chessington.GameEngine.Pieces
         public Bishop(Player player)
             : base(player) { }
 
-        public override IEnumerable<Square> GetAvailableMoves(Board board)
+        public override IEnumerable<Square> GetAvailableMoves(Board board, Square currentSquare)
         {
-            var currentSquare = board.FindPiece(this);
+            
             var validSquares = new List<Square>();
 
 
@@ -23,7 +23,6 @@ namespace Chessington.GameEngine.Pieces
             }
             for (var i = -7; i < 8; i++)
             {
-                
                     validSquares.Add(Square.At(currentSquare.Row + i, currentSquare.Col - i));
                 
             }

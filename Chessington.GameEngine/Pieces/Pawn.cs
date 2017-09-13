@@ -22,9 +22,9 @@ namespace Chessington.GameEngine.Pieces
         }
         
 
-        public override IEnumerable<Square> GetAvailableMoves(Board board)
+        public override IEnumerable<Square> GetAvailableMoves(Board board, Square currentSquare)
         {
-            var currentSquare = board.FindPiece(this);
+
             var squares = new List<Square>();
             
             
