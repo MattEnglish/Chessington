@@ -136,18 +136,84 @@ namespace Chessington.GameEngine
         }
 
         public bool IsPieceInBetweenVerticalExclusive(int col, int startingRow, int targetRow)
-        {
-           
-            
+        {                     
                 for (int row = Math.Min(startingRow,targetRow)+1;  row < Math.Max(startingRow,targetRow); row++)
                 {
                     if (IsPieceOnSquare(new Square(row, col)))
                     {
                         return true;
                     }
+                }                     
+            return false;
+        }
+
+        public bool isPieceDirectlyBetweenDiagonalExclusive(Square startingSquare, Square targetSquare)
+        {
+            if (targetSquare.Row - startingSquare.Row == targetSquare.Col - startingSquare.Col)
+            {
+                if (IsPieceInBetweenForwardDiagonalExclusive(startingSquare, targetSquare))
+                {
+                    return true;
                 }
-            
-            
+            }
+            if (targetSquare.Row - startingSquare.Row ==startingSquare.Col - targetSquare.Col)
+            {
+                if (IsPieceInBetweenBackDiagonalExclusive(startingSquare, targetSquare))
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+        public bool IsPieceInBetweenForwardDiagonalExclusive(Square startingSquare, Square targetSquare)
+        {
+            if (startingSquare.Row < targetSquare.Row)
+            {
+                for (int row = startingSquare.Row + 1; row < targetSquare.Row; row++)
+                {
+                    if (IsPieceOnSquare(new Square(row, startingSquare.Col + row-startingSquare.Row)))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                for (int row = targetSquare.Row + 1; row < startingSquare.Row; row++)
+                {
+                    if (IsPieceOnSquare(new Square(row, targetSquare.Col + row - targetSquare.Row)))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool IsPieceInBetweenBackDiagonalExclusive(Square startingSquare, Square targetSquare)
+        {
+            if (startingSquare.Row < targetSquare.Row)
+            {
+                for (int row = startingSquare.Row + 1; row < targetSquare.Row; row++)
+                {
+                    if (IsPieceOnSquare(new Square(row, startingSquare.Col - (row - startingSquare.Row))))
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                for (int row = targetSquare.Row + 1; row < startingSquare.Row; row++)
+                {
+                    if (IsPieceOnSquare(new Square(row, targetSquare.Col - (row - targetSquare.Row))))
+                    {
+                        return true;
+                    }
+                }
+            }
             return false;
         }
 
