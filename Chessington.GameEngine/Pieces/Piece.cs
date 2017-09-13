@@ -17,7 +17,9 @@ namespace Chessington.GameEngine.Pieces
         public IEnumerable<Square> GetAvailableMoves(Board board)
         {
             var currentSquare = board.FindPiece(this);
-            return GetAvailableMoves(board, currentSquare);
+            var availableSquares = (List<Square>)GetAvailableMoves(board, currentSquare);
+            availableSquares.RemoveAll(s => board.IsPieceOnSquare(s));
+            return availableSquares;
         }
 
         public abstract IEnumerable<Square> GetAvailableMoves(Board board, Square currentSquare);

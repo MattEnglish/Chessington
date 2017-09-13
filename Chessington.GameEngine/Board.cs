@@ -93,5 +93,45 @@ namespace Chessington.GameEngine
             var handler = CurrentPlayerChanged;
             if (handler != null) handler(player);
         }
+
+        public bool IsPieceOnSquare(Square square)
+        {
+            if (board[square.Row,square.Col] == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool IsPieceInBetweenHorizontalExclusive(int row, int startingCol, int targetCol)
+        {
+            for (int col = startingCol+1; col < targetCol; col++)
+            {
+                if (IsPieceOnSquare(new Square(row, col)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool IsPieceInBetweenVerticalExclusive(int col, int startingRow, int targetRow)
+        {
+            
+
+
+            
+                for (int row = Math.Min(startingRow,targetRow)+1;  row < Math.Max(startingRow,targetRow); row++)
+                {
+                    if (IsPieceOnSquare(new Square(row, col)))
+                    {
+                        return true;
+                    }
+                }
+            
+            
+            return false;
+        }
+
     }
 }

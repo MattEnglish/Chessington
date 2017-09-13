@@ -26,9 +26,7 @@ namespace Chessington.GameEngine.Pieces
         {
 
             var squares = new List<Square>();
-            
-            
-
+                        
             if (this.owner == Player.White)
             {
                 if (!hasMoved)
@@ -46,8 +44,10 @@ namespace Chessington.GameEngine.Pieces
                 }
 
                 squares.Add(new Square(currentSquare.Row + 1, currentSquare.Col));
-
             }
+
+            squares.RemoveAll(s => board.IsPieceInBetweenVerticalExclusive(s.Col, s.Row, currentSquare.Row));
+            squares.RemoveAll(s => board.IsPieceOnSquare(s));
 
             return squares;
         }
